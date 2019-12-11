@@ -26,7 +26,14 @@ def load_data(database_filepath):
     return X, y, category_names
 
 def tokenize(text):
-    """tokenize and transform input text. Return cleaned text"""
+    """tokenize and transform input text. Return cleaned text
+    
+    parameters:
+    text -  the message data from the data base
+
+    return:
+    clean_tokens -  The cleaned data
+    """
     url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     detected_urls = re.findall(url_regex, text)
     for url in detected_urls:
@@ -45,7 +52,15 @@ def tokenize(text):
     return clean_tokens
 
 def build_model():
-    """Return Grid Search model with pipeline and Classifier"""
+    """
+    Return Grid Search model with pipeline and Classifier
+
+    parameters:
+    
+    return:
+    cv :  the estimator
+    
+    """
     moc = MultiOutputClassifier(RandomForestClassifier())
 
     pipeline = Pipeline([
@@ -76,7 +91,16 @@ def evaluate_model(model, X_test, y_test, category_names):
     results = pd.DataFrame(columns=['Category', 'f_score', 'precision', 'recall'])
 
 def save_model(model, model_filepath):
-    """Save model as pickle file"""
+    """
+    Save model as pickle file
+    
+    parameters:
+    model - the final model
+    model_filepath : the path of model
+
+    return:
+    there is no return from this function
+    """
     pickle.dump(model, open(model_filepath, 'wb'))
 
 def main():
