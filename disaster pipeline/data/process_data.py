@@ -1,7 +1,10 @@
 import sys
+import os
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
+
+print(os.getcwd())
 
 def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath)
@@ -12,9 +15,9 @@ def load_data(messages_filepath, categories_filepath):
 
 def clean_data(df):
     categories = pd.Series(df['categories'])
-    categories = categories.str.split(";",n=36, expand=True)
+    categories = categories.str.split(";", n=36, expand=True)
     row = categories.iloc[1]
-    category_colnames = [i for i in map(lambda r : r[:-2], row)]
+    category_colnames = [i for i in map(lambda r: r[:-2], row)]
     categories.columns = category_colnames
     for column in categories:
         categories[column] = pd.Series(categories[column]).str.replace('{0}{1}'.format(column,'-'), '')
@@ -26,7 +29,7 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
-    engine = create_engine('sqlite:///data/DisasterResponse.db')
+    engine = create_engine('sqlite:///{0}/DisasterResponse.db'.format(os.getcwd()))
     df.to_sql('message', engine, index=False)  
 
 
@@ -41,7 +44,7 @@ def main():
 
         print('Cleaning data...')
         df = clean_data(df)
-        
+        print(df.head())
         print('Saving data...\n    DATABASE: {}'.format(database_filepath))
         save_data(df, database_filepath)
         
@@ -51,7 +54,7 @@ def main():
         print('Please provide the filepaths of the messages and categories '\
               'datasets as the first and second argument respectively, as '\
               'well as the filepath of the database to save the cleaned data '\
-              'to as the third argument. \n\nExample: python process_data.py '\
+              'to as the third argument. \n\nExample: python models\process_data.py '\
               'disaster_messages.csv disaster_categories.csv '\
               'DisasterResponse.db')
 

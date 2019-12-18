@@ -1,4 +1,5 @@
 import sys
+import os
 import nltk
 import numpy as np
 nltk.download(['punkt', 'wordnet'])
@@ -18,11 +19,15 @@ import pickle
 
 
 def load_data(database_filepath):
-    engine = create_engine('sqlite:///{}'.format(database_filepath))
-    df = pd.read_sql_table('message', con=engine)
+    engine = create_engine('sqlite:///{1}{0}'.format(database_filepath, os.getcwd()))
+    print(engine)
+    print('sqlite:///{1}/{0}'.format(database_filepath, os.getcwd()))
+    df = pd.read_sql_table('message', con=engine)[0:1000]
+    print(df.head())
     X = df['message']
     y = df[df.columns[4:]]
     category_names = y.columns
+    print(len(category_names))
     return X, y, category_names
 
 def tokenize(text):
@@ -86,8 +91,14 @@ def evaluate_model(model, X_test, y_test, category_names):
     None
     """
     # Get results and add them to a dataframe.
+    print(y_test.columns)
     y_pred = model.predict(X_test)
-    print(classification_report(y_test, y_pred, target_names=category_names))
+    print(y_pred)
+    y_pred = pd.DataFrame(y_pred)
+    y_pred.columns = y_test.columns
+    print(y_pred.columns)
+    print(y_pred.head())
+    print(classification_report(y_test, y_pred))
     results = pd.DataFrame(columns=['Category', 'f_score', 'precision', 'recall'])
 
 def save_model(model, model_filepath):
@@ -101,7 +112,7 @@ def save_model(model, model_filepath):
     return:
     there is no return from this function
     """
-    pickle.dump(model, open(model_filepath, 'wb'))
+    pickle.dump(model, open('{1}/models/{0}'.format(model_filepath, os.getcwd()), 'wb'))
 
 def main():
     """Load the data, run the model and save model"""
@@ -110,7 +121,7 @@ def main():
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.25)
-        
+        print(Y_test.head())
         print('Building model...')
         model = build_model()
         
