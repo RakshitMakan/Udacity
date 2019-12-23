@@ -58,7 +58,7 @@ The Project is divided in the following Sections:
 ### Installing
 Clone this GIT repository:
 ```
-git clone https://github.com/matteobonanomi/disaster-response.git
+git clone https://github.com/RakshitMakan/disaster-response.git
 ```
 <a name="executing"></a>
 ### Executing Program:
@@ -72,7 +72,7 @@ git clone https://github.com/matteobonanomi/disaster-response.git
 2. Run the following command in the app's directory to run your web app.
     `python run.py`
 
-3. Go to http://0.0.0.0:3001/
+3. Go to http://127.0.0.1:3001/
 
 <a name="material"></a>
 ### Additional Material
@@ -88,11 +88,8 @@ Using a standard desktop/laptop (4 CPUs, RAM 8Gb or above) it may take several h
 <a name="authors"></a>
 ## Authors
 
-* [Matteo Bonanomi](https://github.com/matteobonanomi)
+* [Rakshit Makan](https://github.com/RakshitMakan)
 
-<a name="license"></a>
-## License
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <a name="acknowledgement"></a>
 ## Acknowledgements
@@ -100,17 +97,4 @@ Using a standard desktop/laptop (4 CPUs, RAM 8Gb or above) it may take several h
 * [Udacity](https://www.udacity.com/) for providing such a complete Data Science Nanodegree Program
 * [Figure Eight](https://www.figure-eight.com/) for providing messages dataset to train my model
 
-<a name="screenshots"></a>
-## Screenshots
 
-1. This is an example of a message you can type to test Machine Learning model performance
-
-![Sample Input](screenshots/sample_input.png)
-
-2. After clicking **Classify Message**, you can see the categories which the message belongs to highlighted in green
-
-![Sample Output](screenshots/sample_output.png)
-
-3. The main page shows some graphs about training dataset, provided by Figure Eight
-
-![Main Page](screenshots/main_page.png)
